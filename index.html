@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* ✅ Remove scrolling */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* ✅ Make it fully fit the iframe */
+            background-color: transparent; /* ✅ Match Storyline's background */
+        }
+        img {
+            max-width: 100%; /* ✅ Ensure image fits */
+            max-height: 100%; /* ✅ Prevent scrolling */
+            display: block;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <img id="dynamicImage" src="story_content/images/default.png" alt="Image non chargée">
+    <script>
+        // ✅ Get Image Path from URL Parameter
+        function getParameterByName(name) {
+            let url = new URL(window.location.href);
+            return url.searchParams.get(name);
+        }
+
+        let imagePath = getParameterByName("image");
+        if (imagePath) {
+            document.getElementById("dynamicImage").src = imagePath;
+        }
+    </script>
+</body>
+</html>
