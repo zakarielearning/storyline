@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Dynamique</title>
+<script>
+       async function loadImage() {
+           const csvUrl = "https://raw.githubusercontent.com/zakarielearning/storyline/refs/heads/main/images.csv";
+           const response = await fetch(csvUrl);
+           const text = await response.text();
+           const rows = text.split("\n").map(row => row.split(","));
+           let imageMap = {};
+           rows.forEach((row, index) => {
+               if (index > 0) {
+                   let id = row[0].trim();
+                   let imageUrl = row[1].trim();
+                   imageMap[id] = imageUrl;
+               }
+           });
+           const params = new URLSearchParams(window.location.search);
+           let objectId = params.get("id"); // Récupère l'ID de l'objet Web depuis l'URL
+           if (imageMap[objectId]) {
+               document.getElementById("imageContainer").innerHTML = `<img src="${imageMap[objectId]}" style="width:100%;">`;
+           }
+       }
+       window.onload = loadImage;
+</script>
+</head>
+<body>
+<div id="imageContainer">Chargement de l'image...</div>
+</body>
+</html>
